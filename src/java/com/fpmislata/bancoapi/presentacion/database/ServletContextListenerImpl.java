@@ -8,10 +8,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-/**
- *
- * @author alumno
- */
+
 public class ServletContextListenerImpl implements ServletContextListener {
 
     @Autowired

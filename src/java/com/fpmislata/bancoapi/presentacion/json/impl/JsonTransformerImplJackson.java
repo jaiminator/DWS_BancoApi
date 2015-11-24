@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fpmislata.bancoapi.presentacion.json.JsonTransformer;
 import java.io.IOException;
 
-/**
- *
- * @author alumno
- */
+
 public class JsonTransformerImplJackson implements JsonTransformer {
 
     @Override

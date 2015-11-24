@@ -7,10 +7,7 @@ import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author Jaime
- */
+
 public class DatabaseMigrationImplFlyWay implements DatabaseMigration {
     
     @Autowired

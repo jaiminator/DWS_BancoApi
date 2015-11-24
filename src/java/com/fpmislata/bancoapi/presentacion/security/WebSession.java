@@ -4,10 +4,6 @@ package com.fpmislata.bancoapi.presentacion.security;
 import com.fpmislata.banco.business.domain.Usuario;
 import java.util.Date;
 
-/**
- *
- * @author alumno
- */
 public class WebSession {
     Usuario usuario;
     Date fecha;
