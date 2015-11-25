@@ -4,7 +4,10 @@ package com.fpmislata.bancoapi.presentacion.controllers;
 import com.fpmislata.banco.business.domain.EntidadBancaria;
 import com.fpmislata.banco.business.service.EntidadBancariaService;
 import com.fpmislata.bancoapi.presentacion.json.JsonTransformer;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,13 @@ public class EntidadBancariaController {
             httpServletResponse.getWriter().println(jsonSalida);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(EntidadBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
