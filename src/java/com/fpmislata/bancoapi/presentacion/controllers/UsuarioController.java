@@ -5,7 +5,10 @@ import com.fpmislata.banco.business.domain.Usuario;
 import com.fpmislata.banco.business.service.UsuarioService;
 import com.fpmislata.bancoapi.presentacion.json.JsonTransformer;
 import com.fpmislata.banco.security.Authorization;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +37,23 @@ public class UsuarioController {
             Usuario usuario = usuarioService.get(idUsuario);
             String jsonSalida = jsonTransformer.toJson(usuario);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (usuario != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -48,11 +63,23 @@ public class UsuarioController {
             List<Usuario> usuarios = usuarioService.findAll();
             String jsonSalida = jsonTransformer.toJson(usuarios);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (usuarios != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -68,6 +95,13 @@ public class UsuarioController {
             httpServletResponse.getWriter().println(jsonSalida);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -84,6 +118,13 @@ public class UsuarioController {
             
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -92,9 +133,16 @@ public class UsuarioController {
         try {
             usuarioService.delete(idUsuario);
          
-            httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     

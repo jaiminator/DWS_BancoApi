@@ -4,7 +4,10 @@ package com.fpmislata.bancoapi.presentacion.controllers;
 import com.fpmislata.banco.business.domain.SucursalBancaria;
 import com.fpmislata.banco.business.service.SucursalBancariaService;
 import com.fpmislata.bancoapi.presentacion.json.JsonTransformer;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +36,23 @@ public class SucursalBancariaController {
             SucursalBancaria sucursalBancaria = sucursalBancariaService.get(idSucursalBancaria);
             String jsonSalida = jsonTransformer.toJson(sucursalBancaria);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (sucursalBancaria != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(SucursalBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -47,11 +62,23 @@ public class SucursalBancariaController {
             List<SucursalBancaria> sucursalesBancarias = sucursalBancariaService.findAll();
             String jsonSalida = jsonTransformer.toJson(sucursalesBancarias);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (sucursalesBancarias != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(SucursalBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -67,6 +94,13 @@ public class SucursalBancariaController {
             httpServletResponse.getWriter().println(jsonSalida);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(SucursalBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -83,6 +117,13 @@ public class SucursalBancariaController {
             
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(SucursalBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -91,9 +132,16 @@ public class SucursalBancariaController {
         try {
             sucursalBancariaService.delete(idSucursalBancaria);
          
-            httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(SucursalBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     

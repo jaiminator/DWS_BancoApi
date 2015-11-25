@@ -36,23 +36,40 @@ public class EntidadBancariaController {
             EntidadBancaria entidadBancaria = entidadBancariaService.get(idEntidadBancaria);
             String jsonSalida = jsonTransformer.toJson(entidadBancaria);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (entidadBancaria != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(EntidadBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
     @RequestMapping(value = "/entidadBancaria", method=RequestMethod.GET, produces = "application/json")
     public void find(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         try {
-            List<EntidadBancaria> entiadadesBancarias = entidadBancariaService.findAll();
-            String jsonSalida = jsonTransformer.toJson(entiadadesBancarias);
+            List<EntidadBancaria> entidadesBancarias = entidadBancariaService.findAll();
+            String jsonSalida = jsonTransformer.toJson(entidadesBancarias);
             
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonSalida);
+            if (entidadesBancarias != null) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+                httpServletResponse.setContentType("application/json; charset=UTF-8");
+                httpServletResponse.getWriter().println(jsonSalida);
+            } else {
+                httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+            
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("text/plain; charset=UTF-8");
@@ -77,6 +94,13 @@ public class EntidadBancariaController {
             httpServletResponse.getWriter().println(jsonSalida);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(EntidadBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -93,6 +117,13 @@ public class EntidadBancariaController {
             
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(EntidadBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
@@ -101,9 +132,16 @@ public class EntidadBancariaController {
         try {
             entidadBancariaService.delete(idEntidadBancaria);
          
-            httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            
+            try {
+                ex.printStackTrace(httpServletResponse.getWriter());
+            } catch (IOException ex1) {
+                Logger.getLogger(EntidadBancariaController.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
 }
